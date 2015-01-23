@@ -12,6 +12,9 @@ module.exports = function(opt) {
     }, opt)
     
     var gl = opt.gl || create(opt)
+    if (!opt.shader)
+        throw new Error('no shader supplied to gl-shader-output')
+    
     var shader = typeof opt.shader === 'function'
             ? opt.shader(gl)
             : opt.shader

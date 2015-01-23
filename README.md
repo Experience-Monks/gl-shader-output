@@ -52,7 +52,7 @@ almostEqual(color2, [0.0, 0.5, 0.0, 1.0], epsilon)
 
 Takes the following options, and returns a `draw` function.
 
-- `shader` the shader object or function (required)
+- `shader` the shader (required), can be a function that accepts `gl` or an instance of gl-shader 
 - `gl` the gl state to re-use, expected to hold a 1x1 canvas (creates a new one if not specified)
 - [webgl-context](https://www.npmjs.com/package/webgl-context) options such as `alpha` and `premultipliedAlpha`
 
