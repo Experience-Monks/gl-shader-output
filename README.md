@@ -7,7 +7,7 @@ A helper module for unit testing shaders and comparing the result of `gl_FragCol
 Example: 
 
 ```js
-var Compare = require('gl-shader-output')
+var ShaderOutput = require('gl-shader-output')
 
 //your shader, could be a simple glsl-shader-core object
 var glslify = require('glslify')
@@ -28,7 +28,7 @@ var shader = glslify({
 })
 
 //get a draw function for our test
-var draw = Compare({
+var draw = ShaderOutput({
     shader: shader
 })
 
