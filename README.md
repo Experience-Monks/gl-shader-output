@@ -2,7 +2,9 @@
 
 [![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
 
-A helper module for unit testing shaders and comparing the result of `gl_FragColor` on a 1x1 WebGL canvas. 
+![img](http://i.imgur.com/bROGMVq.png)
+
+A helper module for unit testing shaders and comparing the result of `gl_FragColor` from a 1x1 WebGL canvas. See [glsl-hsl2rgb](https://github.com/Jam3/glsl-hsl2rgb) for a practical example. 
 
 Example: 
 
@@ -43,6 +45,8 @@ var epsilon = 0.01
 var almostEqual = require('array-almost-equal')
 almostEqual(color2, [0.0, 0.5, 0.0, 1.0], epsilon)
 ```
+
+You can use this with tools like [smokestack](https://github.com/hughsk/smokestack) for test-driven GLSL development. 
 
 ## Usage
 
