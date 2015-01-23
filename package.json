@@ -1,6 +1,6 @@
 {
   "name": "gl-shader-output",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "test a shader's gl_FragColor output on a 1x1 canvas",
   "main": "index.js",
   "license": "MIT",
