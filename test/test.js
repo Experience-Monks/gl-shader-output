@@ -1,10 +1,10 @@
-var test = require('tape')
-
+var test = require('tst')
+var assert = require('assert');
 var create = require('../')
 var glslify = require('glslify')
-var FuzzyArray = require('test-fuzzy-array')
+var almost = require('array-almost-equal')
 
-test('should return the color blue', function(t) {
+test('should return the color blue', function() {
     var shader = glslify({
         vertex: './shaders/test.vert',
         fragment: './shaders/blue.frag'
@@ -14,11 +14,25 @@ test('should return the color blue', function(t) {
         shader: shader
     })
 
-    t.deepEqual(draw(), [0, 0, 1, 1])
-    t.end()
-})
+    assert.deepEqual(draw(), [0, 0, 1, 1])
+});
 
-test('should be able to handle alpha', function(t) {
+test('should process more-than-one dimension input', function() {
+    var shader = glslify({
+        vertex: './shaders/test.vert',
+        fragment: './shaders/blue.frag'
+    })
+
+    var draw = create({
+        shader: shader,
+        width: 2,
+        height: 2
+    })
+
+    assert.deepEqual(draw(), [0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1])
+});
+
+test('should be able to handle alpha', function() {
     var shader = glslify({
         vertex: './shaders/test.vert',
         fragment: './shaders/alpha.frag'
@@ -28,11 +42,10 @@ test('should be able to handle alpha', function(t) {
         shader: shader
     })
 
-    t.deepEqual(draw(), [0, 0, 1, 0])
-    t.end()
-})
+    assert.deepEqual(draw(), [0, 0, 1, 0])
+});
 
-test('should accept uniforms', function(t) {
+test('should accept uniforms', function() {
     var shader = glslify({
         vertex: './shaders/test.vert',
         fragment: './shaders/uniforms.frag'
@@ -44,9 +57,7 @@ test('should accept uniforms', function(t) {
 
     var input = [0, 0.25, 0.5, 1.0]
     var reversed = input.slice().reverse()
-    
-    var almost = FuzzyArray(t, 0.01)
-    almost(draw({ u_value: input, multiplier: 1.0 }), reversed)
-    almost(draw({ u_value: input, multiplier: 3.0 }), [ 1, 1, 0.75, 0 ])
-    t.end()
-})
+
+    almost(draw({ u_value: input, multiplier: 1.0 }), reversed, 0.01)
+    almost(draw({ u_value: input, multiplier: 3.0 }), [ 1, 1, 0.75, 0 ], 0.01)
+});
