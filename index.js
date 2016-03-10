@@ -52,9 +52,6 @@ module.exports = function (shader, opt) {
     //if gl is null - use noGL version of renderer
     if (!gl) return noGl(shader, opt);
 
-    //set gl context dims
-    gl.canvas.width = opt.width;
-    gl.canvas.height = opt.height;
 
     //check WebGL extensions to support floats
     var glExtensions = glExt(gl);
@@ -85,6 +82,11 @@ module.exports = function (shader, opt) {
             }\
         ' , shader);
     }
+
+
+    //set gl context dims
+    gl.canvas.width = opt.width;
+    gl.canvas.height = opt.height;
 
     //as far we process 2d rect
     gl.disable(gl.DEPTH_TEST);
