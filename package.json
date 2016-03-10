@@ -1,7 +1,7 @@
 {
   "name": "gl-shader-output",
   "version": "1.0.2",
-  "description": "test a shader's gl_FragColor output on a 1x1 canvas",
+  "description": "Process fragment shader on an rectangular canvas",
   "main": "index.js",
   "license": "MIT",
   "author": {
@@ -9,23 +9,24 @@
     "email": "dave.des@gmail.com",
     "url": "https://github.com/mattdesl"
   },
+  "contributors": [
+    "Dmitry Ivanov <dfcreative@gmail.com>"
+  ],
   "dependencies": {
-    "a-big-triangle": "^1.0.0",
-    "canvas-pixels": "0.0.0",
+    "gl-fbo": "^2.0.5",
+    "gl-shader": "^4.2.0",
     "glsl-js": "^1.2.3",
     "webgl-context": "^2.1.1",
+    "webglew": "^1.0.5",
     "xtend": "^4.0.0"
   },
   "devDependencies": {
     "array-almost-equal": "^1.0.0",
     "faucet": "0.0.1",
-    "glslify": "^1.6.0",
+    "glslify": "^2.0.0",
     "smokestack": "^3.2.0",
     "tap-closer": "^1.0.0",
-    "tape": "^3.4.0",
-    "test-fuzzy-array": "^1.0.1",
-    "tst": "^1.3.1",
-    "wzrd": "^1.2.1"
+    "tst": "^1.3.1"
   },
   "browserify": {
     "transform": [
@@ -34,8 +35,8 @@
   },
   "scripts": {
     "test:browser": "budo test/test.js",
-    "dev": "wzrd test/test.js -- -t glslify",
-    "test": "browserify test/test.js -t glslify | tap-closer | smokestack | faucet"
+    "test": "node test/test.js",
+    "test:smokestack": "browserify test/test.js -t glslify | tap-closer | smokestack | faucet"
   },
   "keywords": [
     "test",
