@@ -18,7 +18,10 @@ var draw = ShaderOutput(`
     void main() {
         gl_FragColor = vec4(0.0, green, 0.0, 1.0);
     }
-`);
+`, {
+    width: 1,
+    height: 1
+});
 
 //returns the frag color as [R, G, B, A]
 var color = draw()
