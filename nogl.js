@@ -3,7 +3,7 @@
  *
  * @module gl-shader-output/nogl
  */
-var GLSL = require('../glsl-js');
+var GLSL = require('glsl-js');
 
 
 function create (shader, options) {
