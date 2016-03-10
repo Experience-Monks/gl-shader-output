@@ -100,7 +100,7 @@ test('should be able to handle alpha', function() {
 });
 
 
-test.only('should accept uniforms', function() {
+test('should accept uniforms', function() {
     var shader = Shader(createGl(),
         glslify('./shaders/test.vert'),
         glslify('./shaders/uniforms.frag')

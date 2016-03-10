@@ -25,7 +25,6 @@ function create (shader, options) {
 	};
 
 	var source = compiler.compile(shader);
-	console.log(source)
 
 	var process = new Function('__data', `
 		${source}

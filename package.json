@@ -35,8 +35,8 @@
   },
   "scripts": {
     "test:browser": "budo test/test.js",
-    "test": "node test/test.js",
-    "test:smokestack": "browserify test/test.js -t glslify | tap-closer | smokestack | faucet"
+    "test:node": "node test/test.js",
+    "test": "browserify test/test.js -t glslify | tap-closer | smokestack | faucet"
   },
   "keywords": [
     "test",
