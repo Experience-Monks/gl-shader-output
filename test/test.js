@@ -13,9 +13,9 @@ test('should return the color blue', function(t) {
                 glslify('./shaders/test.vert'),
                 glslify('./shaders/blue.frag')
             )
-        }
+        },
+        float: false
     })
-
     t.deepEqual(draw(), [0, 0, 1, 1])
     t.end()
 })
@@ -49,6 +49,6 @@ test('should accept uniforms', function(t) {
 
     var almost = FuzzyArray(t, 0.01)
     almost(draw({ u_value: input, multiplier: 1.0 }), reversed)
-    almost(draw({ u_value: input, multiplier: 3.0 }), [ 1, 1, 0.75, 0 ])
+    almost(draw({ u_value: input, multiplier: 3.0 }), [ 3, 1.5, 0.75, 0 ])
     t.end()
 })
