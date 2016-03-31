@@ -60,6 +60,7 @@ Takes fragment shader source with the following options, and returns a `draw` fu
 - `width` the width of gl context, by default `1`
 - `height` the height of gl context, by default `1`
 - `shader` the shader, can be a source code of fragment shader, a function that accepts `gl` or an instance of gl-shader. Same as passing shader as the first argument.
+- `float` use float values format for processing, if possible.
 - [webgl-context](https://www.npmjs.com/package/webgl-context) options such as `alpha` and `premultipliedAlpha`
 
 The draw function has the following signature:
