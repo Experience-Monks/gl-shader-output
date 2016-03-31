@@ -5,19 +5,20 @@ var xtend = require('xtend')
 var assign = require('xtend/mutable')
 
 module.exports = function(opt) {
-    opt = xtend({ 
-        width: 1, 
+    opt = xtend({
+        width: 1,
         height: 1,
-        preserveDrawingBuffer: true 
+        preserveDrawingBuffer: true
     }, opt)
-    
-    var gl = opt.gl || create(opt)
+
+    var gl = opt.shader && opt.shader.gl || opt.gl || create(opt)
     if (!opt.shader)
         throw new Error('no shader supplied to gl-shader-output')
-    
+
     var shader = typeof opt.shader === 'function'
             ? opt.shader(gl)
             : opt.shader
+
 
     function process(uniforms) {
         gl.clearColor(0, 0, 0, 0)

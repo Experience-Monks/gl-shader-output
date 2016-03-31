@@ -17,7 +17,8 @@
   },
   "devDependencies": {
     "faucet": "0.0.1",
-    "glslify": "^1.6.0",
+    "gl-shader": "^4.2.0",
+    "glslify": "^5.0.2",
     "smokestack": "^3.2.0",
     "tap-closer": "^1.0.0",
     "tape": "^3.4.0",
