@@ -4,8 +4,26 @@ var xtend = require('xtend')
 var assign = require('xtend/mutable')
 var glExt = require('webglew')
 var Framebuffer = require('gl-fbo')
+var Shader = require('gl-shader')
 
-module.exports = function(opt) {
+
+module.exports = function (shader, opt) {
+    if (!opt) {
+        //just options
+        if (typeof shader === 'object' && !shader.fragShader) {
+            opt = shader
+        }
+        //just a shader
+        else {
+            opt = {
+                shader: shader
+            };
+        }
+    }
+    else {
+        opt.shader = shader
+    }
+
     opt = xtend({
         width: 1,
         height: 1,
@@ -24,6 +42,16 @@ module.exports = function(opt) {
     var shader = typeof opt.shader === 'function'
             ? opt.shader(gl)
             : opt.shader
+
+    //create gl-shader, if only fragment shader source
+    if (typeof shader === 'string') {
+        shader = Shader(gl, '\
+            attribute vec2 position;\
+            void main() {\
+              gl_Position = vec4(position, 1.0, 1.0);\
+            }\
+        ' , shader);
+    }
 
     //try to use floats
     var float = glExt(gl).OES_texture_float && opt.float

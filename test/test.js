@@ -21,14 +21,7 @@ test('should return the color blue', function(t) {
 })
 
 test('should be able to handle alpha', function(t) {
-    var shader = Shader(createGl({ width: 1, height: 1}),
-        glslify('./shaders/test.vert'),
-        glslify('./shaders/alpha.frag')
-    )
-
-    var draw = create({
-        shader: shader
-    })
+    var draw = create(glslify('./shaders/alpha.frag'))
 
     t.deepEqual(draw(), [0, 0, 1, 0])
     t.end()
@@ -50,5 +43,14 @@ test('should accept uniforms', function(t) {
     var almost = FuzzyArray(t, 0.01)
     almost(draw({ u_value: input, multiplier: 1.0 }), reversed)
     almost(draw({ u_value: input, multiplier: 3.0 }), [ 3, 1.5, 0.75, 0 ])
+    t.end()
+})
+
+test('should process n-dim input', function (t) {
+    var draw = create(glslify('./shaders/blue.frag'), {
+        width: 2,
+        height: 2
+    });
+    t.deepEqual(draw(), [0,0,1,1, 0,0,1,1, 0,0,1,1, 0,0,1,1])
     t.end()
 })
