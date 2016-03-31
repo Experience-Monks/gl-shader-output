@@ -10,7 +10,6 @@
     "url": "https://github.com/mattdesl"
   },
   "dependencies": {
-    "a-big-triangle": "^1.0.0",
     "gl-fbo": "^2.0.5",
     "webgl-context": "^2.1.1",
     "webglew": "^1.0.5",

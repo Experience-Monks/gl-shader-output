@@ -1,5 +1,4 @@
 var create = require('webgl-context')
-var triangle = require('a-big-triangle')
 var xtend = require('xtend')
 var assign = require('xtend/mutable')
 var glExt = require('webglew')
@@ -17,7 +16,7 @@ module.exports = function (shader, opt) {
         else {
             opt = {
                 shader: shader
-            };
+            }
         }
     }
     else {
@@ -50,8 +49,23 @@ module.exports = function (shader, opt) {
             void main() {\
               gl_Position = vec4(position, 1.0, 1.0);\
             }\
-        ' , shader);
+        ' , shader)
     }
+
+    //micro optimizations
+    gl.disable(gl.DEPTH_TEST)
+    gl.disable(gl.BLEND)
+    gl.disable(gl.CULL_FACE)
+    gl.disable(gl.DITHER)
+    gl.disable(gl.POLYGON_OFFSET_FILL)
+    gl.disable(gl.SAMPLE_COVERAGE)
+    gl.disable(gl.SCISSOR_TEST)
+    gl.disable(gl.STENCIL_TEST)
+
+    var buffer = gl.createBuffer()
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, -1, 3, 3, -1]), gl.STATIC_DRAW)
+    shader.attributes.position.pointer()
 
     //try to use floats
     var float = glExt(gl).OES_texture_float && opt.float
@@ -79,7 +93,7 @@ module.exports = function (shader, opt) {
         }
 
         //full-screen quad
-        triangle(gl)
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
 
         if (float) {
             var pixels = new Float32Array(w * h * 4)
