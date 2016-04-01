@@ -4,9 +4,9 @@
 
 ![img](http://i.imgur.com/bROGMVq.png)
 
-A helper module for unit testing shaders and comparing the result of `gl_FragColor` from a 1x1 WebGL canvas. See [glsl-hsl2rgb](https://github.com/Jam3/glsl-hsl2rgb) for a practical example. 
+A helper module for unit testing shaders and comparing the result of `gl_FragColor` from a 1x1 WebGL canvas. See [glsl-hsl2rgb](https://github.com/Jam3/glsl-hsl2rgb) for a practical example.
 
-Example: 
+Example:
 
 ```js
 var ShaderOutput = require('gl-shader-output')
@@ -46,18 +46,21 @@ var almostEqual = require('array-almost-equal')
 almostEqual(color2, [0.0, 0.5, 0.0, 1.0], epsilon)
 ```
 
-You can use this with tools like [smokestack](https://github.com/hughsk/smokestack) for test-driven GLSL development. 
+You can use this with tools like [smokestack](https://github.com/hughsk/smokestack) for test-driven GLSL development.
 
 ## Usage
 
 [![NPM](https://nodei.co/npm/gl-shader-output.png)](https://www.npmjs.com/package/gl-shader-output)
 
-#### `draw = ShaderOutput(opt)`
+#### `draw = ShaderOutput(options)`
 
-Takes the following options, and returns a `draw` function.
+Takes fragment shader source with the following options, and returns a `draw` function.
 
-- `shader` the shader (required), can be a function that accepts `gl` or an instance of gl-shader 
-- `gl` the gl state to re-use, expected to hold a 1x1 canvas (creates a new one if not specified)
+- `shader` the shader, can be a source code of fragment shader, a function that accepts `gl` or an instance of gl-shader.
+- `gl` the gl state to re-use, expected to hold a 1x1 canvas (creates a new one if not specified, or uses the context of the shader, if gl-shader passed as the first argument)
+- `width` the width of gl context, by default `1`
+- `height` the height of gl context, by default `1`
+- `float` use float values format for processing, if possible.
 - [webgl-context](https://www.npmjs.com/package/webgl-context) options such as `alpha` and `premultipliedAlpha`
 
 The draw function has the following signature:
