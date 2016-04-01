@@ -85,9 +85,9 @@ module.exports = function (opt) {
         else {
             var pixels = new Uint8Array(w * h * 4)
             gl.readPixels(0, 0, w, h, gl.RGBA, gl.UNSIGNED_BYTE, pixels)
-            pixels = Array.prototype.map.call(pixels, function (x) {
-                return x / 255;
-            });
+            pixels = Array.prototype.map.call(pixels, function (p) {
+                return p / 255;
+            })
         }
 
         return pixels
