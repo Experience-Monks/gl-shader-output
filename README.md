@@ -9,7 +9,7 @@ A helper module for unit testing shaders and comparing the result of `gl_FragCol
 Example:
 
 ```js
-var createShaderOutput = require('gl-shader-output')
+var createShaderOutput = require('gl-shader-output');
 
 // Fragment shader source, or a gl-shader instance
 var fragShader = [
@@ -18,21 +18,21 @@ var fragShader = [
     'void main() {',
         'gl_FragColor = vec4(0.0, green, 0.0, 1.0);',
     '}'
-].join('\n')
+].join('\n');
 
 // get a draw function for our test
-var draw = createShaderOutput(fragShader)
+var draw = createShaderOutput(fragShader);
 
-//returns the frag color as [R, G, B, A]
-var color = draw()
+// returns the frag color as [R, G, B, A]
+var color = draw();
 
-//we could also set uniforms before rendering
-var color2 = draw({ green: 0.5 })
+// we could also set uniforms before rendering
+var color2 = draw({ green: 0.5 });
 
-//due to precision loss, you may want to use a fuzzy equality check
-var epsilon = 0.01
-var almostEqual = require('array-almost-equal')
-almostEqual(color2, [0.0, 0.5, 0.0, 1.0], epsilon)
+// due to precision loss, you may want to use a fuzzy equality check
+var epsilon = 0.01;
+var almostEqual = require('array-almost-equal');
+almostEqual(color2, [0.0, 0.5, 0.0, 1.0], epsilon);
 ```
 
 You can use this with tools like [smokestack](https://github.com/hughsk/smokestack) for test-driven GLSL development.
