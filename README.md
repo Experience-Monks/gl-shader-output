@@ -52,14 +52,14 @@ You can use this with tools like [smokestack](https://github.com/hughsk/smokesta
 
 [![NPM](https://nodei.co/npm/gl-shader-output.png)](https://www.npmjs.com/package/gl-shader-output)
 
-#### `draw = ShaderOutput(shader?, options?)`
+#### `draw = ShaderOutput(options)`
 
-Takes fragment shader source with the following options, and returns a `draw` function. Possible options:
+Takes fragment shader source with the following options, and returns a `draw` function.
 
+- `shader` the shader, can be a source code of fragment shader, a function that accepts `gl` or an instance of gl-shader.
 - `gl` the gl state to re-use, expected to hold a 1x1 canvas (creates a new one if not specified, or uses the context of the shader, if gl-shader passed as the first argument)
 - `width` the width of gl context, by default `1`
 - `height` the height of gl context, by default `1`
-- `shader` the shader, can be a source code of fragment shader, a function that accepts `gl` or an instance of gl-shader. Same as passing shader as the first argument.
 - `float` use float values format for processing, if possible.
 - [webgl-context](https://www.npmjs.com/package/webgl-context) options such as `alpha` and `premultipliedAlpha`
 
