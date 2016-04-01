@@ -6,7 +6,7 @@ var Shader = require('gl-shader');
 
 module.exports = function (shader, opt) {
   if (!shader) {
-    throw new Error('no shader supplied to gl-shader-output')
+    throw new Error('no shader supplied to gl-shader-output');
   }
 
   opt = xtend({
@@ -29,12 +29,12 @@ module.exports = function (shader, opt) {
 
   // create gl-shader, if only fragment shader source
   if (typeof shader === 'string') {
-    shader = Shader(gl, '\
-            attribute vec2 position;\
-            void main() {\
-              gl_Position = vec4(position, 1.0, 1.0);\
-            }\
-        ', shader);
+    shader = Shader(gl, [
+      'attribute vec2 position;',
+      'void main() {',
+      '  gl_Position = vec4(position, 1.0, 1.0);',
+      '}'
+    ].join('\n'), shader);
   }
 
   // micro optimizations

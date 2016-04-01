@@ -27,7 +27,7 @@
   },
   "scripts": {
     "dev": "wzrd test/test.js -- -t glslify",
-    "test": "browserify test/test.js -t glslify | tap-closer | smokestack | faucet"
+    "test": "semistandard && browserify test/test.js -t glslify | tap-closer | smokestack | faucet"
   },
   "keywords": [
     "test",
