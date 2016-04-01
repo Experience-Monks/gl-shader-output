@@ -1,28 +1,11 @@
 var create = require('webgl-context')
 var xtend = require('xtend')
 var assign = require('xtend/mutable')
-var glExt = require('webglew')
 var Framebuffer = require('gl-fbo')
 var Shader = require('gl-shader')
 
 
-module.exports = function (shader, opt) {
-    if (!opt) {
-        //just options
-        if (typeof shader === 'object' && !shader.fragShader) {
-            opt = shader
-        }
-        //just a shader
-        else {
-            opt = {
-                shader: shader
-            }
-        }
-    }
-    else {
-        opt.shader = shader
-    }
-
+module.exports = function (opt) {
     opt = xtend({
         width: 1,
         height: 1,
@@ -68,7 +51,7 @@ module.exports = function (shader, opt) {
     shader.attributes.position.pointer()
 
     //try to use floats
-    var float = glExt(gl).OES_texture_float && opt.float
+    var float = opt.float && gl.getExtension('OES_texture_float')
 
     //set framebuffer as a main target
     var framebuffer = new Framebuffer(gl, [opt.width, opt.height], {
@@ -102,9 +85,9 @@ module.exports = function (shader, opt) {
         else {
             var pixels = new Uint8Array(w * h * 4)
             gl.readPixels(0, 0, w, h, gl.RGBA, gl.UNSIGNED_BYTE, pixels)
-            pixels = new Float32Array(pixels).map(function(p) {
-                return p / 255
-            })
+            pixels = Array.prototype.map.call(pixels, function (x) {
+                return x / 255;
+            });
         }
 
         return pixels

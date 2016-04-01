@@ -21,7 +21,9 @@ test('should return the color blue', function(t) {
 })
 
 test('should be able to handle alpha', function(t) {
-    var draw = create(glslify('./shaders/alpha.frag'))
+    var draw = create({
+        shader: glslify('./shaders/alpha.frag')
+    })
 
     t.deepEqual(draw(), [0, 0, 1, 0])
     t.end()
@@ -47,7 +49,8 @@ test('should accept uniforms', function(t) {
 })
 
 test('should process n-dim input', function (t) {
-    var draw = create(glslify('./shaders/blue.frag'), {
+    var draw = create({
+        shader: glslify('./shaders/blue.frag'),
         width: 2,
         height: 2
     });
