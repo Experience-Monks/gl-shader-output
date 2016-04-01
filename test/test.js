@@ -7,13 +7,12 @@ var Shader = require('gl-shader');
 var createGl = require('webgl-context');
 
 test('should return the color blue', function(t) {
-    var draw = create({
-        shader: function (gl) {
-            return Shader(gl,
-                glslify('./shaders/test.vert'),
-                glslify('./shaders/blue.frag')
-            )
-        },
+    var draw = create(function (gl) {
+        return Shader(gl,
+            glslify('./shaders/test.vert'),
+            glslify('./shaders/blue.frag')
+        )
+    }, {
         float: false
     })
     t.deepEqual(draw(), [0, 0, 1, 1])
@@ -21,9 +20,7 @@ test('should return the color blue', function(t) {
 })
 
 test('should be able to handle alpha', function(t) {
-    var draw = create({
-        shader: glslify('./shaders/alpha.frag')
-    })
+    var draw = create(glslify('./shaders/alpha.frag'))
 
     t.deepEqual(draw(), [0, 0, 1, 0])
     t.end()
@@ -35,9 +32,7 @@ test('should accept uniforms', function(t) {
         glslify('./shaders/uniforms.frag')
     )
 
-    var draw = create({
-        shader: shader
-    })
+    var draw = create(shader)
 
     var input = [0, 0.25, 0.5, 1.0]
     var reversed = input.slice().reverse()
@@ -49,8 +44,7 @@ test('should accept uniforms', function(t) {
 })
 
 test('should process n-dim input', function (t) {
-    var draw = create({
-        shader: glslify('./shaders/blue.frag'),
+    var draw = create(glslify('./shaders/blue.frag'), {
         width: 2,
         height: 2
     });

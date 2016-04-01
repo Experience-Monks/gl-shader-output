@@ -1,11 +1,14 @@
-var create = require('webgl-context')
+var createGLContext = require('webgl-context')
 var xtend = require('xtend')
 var assign = require('xtend/mutable')
 var Framebuffer = require('gl-fbo')
 var Shader = require('gl-shader')
 
 
-module.exports = function (opt) {
+module.exports = function (shader, opt) {
+    if (!shader)
+        throw new Error('no shader supplied to gl-shader-output')
+
     opt = xtend({
         width: 1,
         height: 1,
@@ -13,17 +16,16 @@ module.exports = function (opt) {
         float: true
     }, opt)
 
-    var gl = opt.shader && opt.shader.gl || opt.gl || create(opt)
-    if (!opt.shader)
-        throw new Error('no shader supplied to gl-shader-output')
+    var gl = shader.gl || opt.gl || createGLContext(opt)
 
     //set gl context dims
     gl.canvas.width = opt.width
     gl.canvas.height = opt.height
 
-    var shader = typeof opt.shader === 'function'
-            ? opt.shader(gl)
-            : opt.shader
+    //shader can be a function or string
+    shader = typeof shader === 'function'
+            ? shader(gl)
+            : shader
 
     //create gl-shader, if only fragment shader source
     if (typeof shader === 'string') {
@@ -32,7 +34,7 @@ module.exports = function (opt) {
             void main() {\
               gl_Position = vec4(position, 1.0, 1.0);\
             }\
-        ' , shader)
+        ', shader)
     }
 
     //micro optimizations
@@ -62,8 +64,7 @@ module.exports = function (opt) {
     framebuffer.bind()
     shader.bind()
 
-
-    function process(uniforms) {
+    function render (uniforms) {
         var w = gl.drawingBufferWidth, h = gl.drawingBufferHeight
 
         gl.clearColor(0, 0, 0, 0)
@@ -92,5 +93,5 @@ module.exports = function (opt) {
 
         return pixels
     }
-    return process
+    return render
 }

@@ -9,30 +9,19 @@ A helper module for unit testing shaders and comparing the result of `gl_FragCol
 Example:
 
 ```js
-var ShaderOutput = require('gl-shader-output')
+var createShaderOutput = require('gl-shader-output')
 
-//your shader, could be a simple glsl-shader-core object
-var glslify = require('glslify')
-var shader = glslify({
-    vertex: [
-        'attribute vec2 position;',
-        'void main() {',
-          'gl_Position = vec4(position, 1.0, 1.0);',
-        '}'
-    ].join('\n')
-    fragment: [
-        'precision mediump float;',
-        'uniform float green;',
-        'void main() {',
-            'gl_FragColor = vec4(0.0, green, 0.0, 1.0);',
-        '}'
-    ].join('\n')
-})
+// Fragment shader source, or a gl-shader instance
+var fragShader = [
+    'precision mediump float;',
+    'uniform float green;',
+    'void main() {',
+        'gl_FragColor = vec4(0.0, green, 0.0, 1.0);',
+    '}'
+].join('\n')
 
-//get a draw function for our test
-var draw = ShaderOutput({
-    shader: shader
-})
+// get a draw function for our test
+var draw = createShaderOutput(fragShader)
 
 //returns the frag color as [R, G, B, A]
 var color = draw()
@@ -52,22 +41,29 @@ You can use this with tools like [smokestack](https://github.com/hughsk/smokesta
 
 [![NPM](https://nodei.co/npm/gl-shader-output.png)](https://www.npmjs.com/package/gl-shader-output)
 
-#### `draw = ShaderOutput(options)`
+#### `draw = createShaderOutput(shader, [opt])`
 
-Takes fragment shader source with the following options, and returns a `draw` function.
+Takes a `shader` with optional `opt` settings and returns a `draw` function.
 
-- `shader` the shader, can be a source code of fragment shader, a function that accepts `gl` or an instance of gl-shader.
-- `gl` the gl state to re-use, expected to hold a 1x1 canvas (creates a new one if not specified, or uses the context of the shader, if gl-shader passed as the first argument)
+Where `shader` can be one of the following:
+
+- A GLSL String, which is used as the fragment shader
+- An instance of [`gl-shader`](https://github.com/stackgl/gl-shader)
+- A function with the signature `fn(gl)`, which returns a new gl-shader instance
+
+
+Options:
+
+- `gl` the WebGL context – defaults to `shader.gl` if an instance is passed, otherwise constructs a new context
 - `width` the width of gl context, by default `1`
 - `height` the height of gl context, by default `1`
-- `float` use float values format for processing, if possible.
-- [webgl-context](https://www.npmjs.com/package/webgl-context) options such as `alpha` and `premultipliedAlpha`
+- `float` whether to use floating point values, default `true` (requires an extension)
 
-The draw function has the following signature:
+Also supports [webgl-context](https://www.npmjs.com/package/webgl-context) options such as `alpha` and `premultipliedAlpha`.
 
-```js
-var fragColor = draw([uniforms])
-```
+The returned function has the following signature:
+
+#### `color = draw([uniforms])`
 
 Where `uniforms` is an optional map of uniform names to values (such as `[x, y]` array for vec2), applied before rendering.
 
