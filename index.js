@@ -37,16 +37,6 @@ module.exports = function (shader, opt) {
     ].join('\n'), shader);
   }
 
-  // micro optimizations
-  gl.disable(gl.DEPTH_TEST);
-  gl.disable(gl.BLEND);
-  gl.disable(gl.CULL_FACE);
-  gl.disable(gl.DITHER);
-  gl.disable(gl.POLYGON_OFFSET_FILL);
-  gl.disable(gl.SAMPLE_COVERAGE);
-  gl.disable(gl.SCISSOR_TEST);
-  gl.disable(gl.STENCIL_TEST);
-
   var buffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, -1, 3, 3, -1]), gl.STATIC_DRAW);
@@ -71,9 +61,10 @@ module.exports = function (shader, opt) {
     gl.clearColor(0, 0, 0, 0);
     gl.clear(gl.COLOR_BUFFER_BIT);
 
+    shader.bind();
+      
     // if user specifies some uniforms
     if (uniforms) {
-      shader.bind();
       assign(shader.uniforms, uniforms);
     }
 
